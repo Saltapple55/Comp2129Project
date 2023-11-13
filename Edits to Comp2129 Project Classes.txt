@@ -1,0 +1,32 @@
+Changes to Comp2129 Project
+General Changes
+- added abstract class Manager, with enforced ToString(), checkDuplicate()
+-almost all methods in manager classs that pull information from other managers has been moved to Coordinator
+
+Customer/Customermanager
+-made constructor public instead of private for CustomerManager
+-removed adding int id from Customer constructor/addCustomer()
+-made customer id variable static
+-added Property NumCustomer, with only a getter
+-added ToString() to CustomerManager, which returns string - all the customers. returns customers.
+-converted methods to camelCase
+-convert variables to camelCase
+-checkIfDuplicate is now a private helper method checkCustomerExists, used in viewCustomer and Add Customer
+-changed all instances of "foreach(Customer in Customers)"to "for (int i = 0; i < numCustomers; i++)" to speed up code and reduce unnecessary breaks/null checks. Also changed customer.method to customerList[i].method
+-removed ID number and Booking number from Customer.ToString() as instructions only want name and phone
+-changed removeCustomer to be boolean, removed Console.WriteLines(). Added code to actually remove customer from list instead of just reducing numCustomers
+	-removeCustomer changed from accepting id, which user cannot see, to accepting index. This works in conjuction with static getValidIndexInput().
+-viewCustomer has been implemented. Most code was just copy pasted from checkCustomerExists, but returns Customer
+
+
+Booking/BookingManager
+-Booking gets sent back for multiple changes
+
+Flight/FlightManager
+-Flight and Flight Manager gets sent back for multiple changes
+#-changed class name/constructor from Flights to Flight
+#-deleted Flight[] passengerList from FlightManager
+#-moved numPassengers/maxSeats to Flight from FlightManager, changed constructor accordingly
+
+
+Questions to ask: 
