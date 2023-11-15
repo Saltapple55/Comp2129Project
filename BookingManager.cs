@@ -85,10 +85,16 @@ namespace FlightProject2129
                 bookingList[numBookings] = new Booking(bookingNum, customer, flight, bookingDate);
                 numBookings++;
                 return true;
+                // ADD ERROR CODE
+                
             }
             return false;
         }
+        //ADD NUM PASSENGER = MAX SEATS THEN GIVE ERROR
 
+        
+
+        
 
         public override string ToString()
         {
