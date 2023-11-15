@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace Booking
+namespace FlightProject2129
 {
     internal class BookingManager
     {
@@ -92,6 +92,7 @@ namespace Booking
 
         public override string ToString()
         {
+            string s = "---------Bookings---------"
             string s = base.ToString();
             for (int i = 0; i < numBookings; i++)
             {
