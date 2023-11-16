@@ -21,11 +21,13 @@ namespace FlightProject2129
 
         }
 
-        public bool addFlight(int flightNum, string flightDest, string flightOrigin)
+        public int NumFlights { get { return numFlights; } }
+
+        public bool addFlight(int flightNum, string flightDest, string flightOrigin, int maxSeats)
         {
             if (!flightExists(flightNum))
             {
-                flightList[numFlights] = new Flight(flightNum, flightDest, flightOrigin);
+                flightList[numFlights] = new Flight(flightNum, flightDest, flightOrigin, maxSeats);
                 numFlights++;
                 return true;
             }
@@ -65,6 +67,7 @@ namespace FlightProject2129
         {
             if (flightExists(flightNum))
             {
+
                 flightList[numFlights] = null;
                 numFlights--;
                 return true;

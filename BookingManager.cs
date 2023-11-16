@@ -1,16 +1,15 @@
-using Microsoft.VisualBasic;
+﻿using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
-namespace Booking
+namespace FlightProject2129
 {
-    internal class BookingManager
+    internal class BookingManager : Manager
     {
+        //add booking manager method to get all customers in flight
         private int maxBookings;
         private int numBookings;
         private Booking[] bookingList;
@@ -24,28 +23,28 @@ namespace Booking
             bookingList = new Booking[max];
         }
 
-      
-        public Customer[] getCustomersInFlight(Flight f)
+        // Show Customers
+
+        public void displayCustomers()
         {
-            Customer[] flightCustomer = new Customer[Booking.Length];
-            int count = 0;
-
-            for (int i = 0; i < Booking.Length; i++)
+            foreach (Customer customers in customers)
             {
-                // unsure if to use getFlight or Flight 
-                if (Booking[i].Flight().Equals(f))
-                {
-                    flightCustomer[count++] = Booking[i].Customer;
-                }
-
-               }
-            // copy with only length of count 
-            Customer[] custinFlight = new Customer[count];
-            Array.Copy(flightCustomer, custinFlight, count);
-            Console.WriteLine("This is the customers in flight: ");
-            return custinFlight;
-
+                Console.WriteLine("List of Customers: \n ");
+                Console.WriteLine("Customer Id:" + custId + "\n Customer First Name: " 
+                    + custFname + "Customer Last Name: " + custLname );
+            }
         }
+
+        // DISPLAY FLIGHTS: 
+        public void displayFlights()
+        {
+            foreach (Flight flight in flights)
+            {
+                Console.WriteLine("List of Flights: \n");
+                Console.WriteLine("Flight Id:" + flightId);
+            }
+        }
+       
            
         // check if the booking works 
         public bool IsBookingValid(int custId, int flightId)
@@ -58,9 +57,44 @@ namespace Booking
             return selectedCustomer != null && selectedFlight != null && selectedFlight.AvailableSeats > 0 && existingBooking == null;
         }
 
+        // NEED THE CUSTOMER 
+        //FIND CUSTOMER
+        public Customer findcustId(int custId)
+        {
+            foreach (Customer customer in customers)
+            {
+                if (customer.custId == custId) 
+                    return customer;
+            }
+        }
+
+        // NEED THE FLIGHT
+        //FIND THE FLIGHT
+        public Flight findflightId(int flightId)
+        {
+            foreach (Flight flight in flights)
+            {
+                if (flight.flightId == flightId)
+                    return flight;
+            }
+        }
+
+        public Booking findBookingwithIds(int custId, int flightId)
+        {
+            foreach (Booking booking in booking)
+            {
+                if (booking.custId() == custId && booking.flightId() == bookingNum)
+                {
+                    return booking;
+                }
+            }
+            return null; 
+            Console.WriteLine("The Booking was not found. ");
+        }
+
         //standard adding of booking
 
-        public bool addBooking(int bookingNum,Customer customer, Flight flight, string bookingDate)
+        public bool addBooking(int bookingNum, int[] customers, string bookingDate)
         {
 
             // Get the customer ID and flight ID
@@ -69,20 +103,22 @@ namespace Booking
             Console.WriteLine("\nEnter the Flight Id Please: ");
             int flightId = int.Parse(Console.ReadLine());
 
-           
+            //add check if flight is full here
+
             // if the booking didn't match 
+            customer.increaseNumBooking();
+
 
             if (!isBookingValid(custId, flightId))
             {
-                return null; 
-                //Console.WriteLine("Booking does not match the customer or flight Id please try again.");
+                Console.WriteLine("Booking does not match the customer or flight Id please try again.");
             }
 
 
             // KEEP THIS TO PREVENT USING TOO MUCH MEMORY ??? 
             if (numBookings < maxBookings)
             {
-                bookingList[numBookings] = new Booking(bookingNum, customer, flight, bookingDate);
+                bookingList[numBookings] = new Booking(bookingNum, customers, bookingDate);
                 numBookings++;
                 return true;
             }
@@ -90,9 +126,10 @@ namespace Booking
         }
 
 
+
         public override string ToString()
         {
-            string s = base.ToString();
+            string s = "------------Bookings------------"
             for (int i = 0; i < numBookings; i++)
             {
                 s = s + bookingList[i].ToString();
