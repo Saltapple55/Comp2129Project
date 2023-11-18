@@ -25,25 +25,6 @@ namespace FlightProject2129
 
         // Show Customers
 
-        public void displayCustomers()
-        {
-            foreach (Customer customers in customers)
-            {
-                Console.WriteLine("List of Customers: \n ");
-                Console.WriteLine("Customer Id:" + custId + "\n Customer First Name: " 
-                    + custFname + "Customer Last Name: " + custLname );
-            }
-        }
-
-        // DISPLAY FLIGHTS: 
-        public void displayFlights()
-        {
-            foreach (Flight flight in flights)
-            {
-                Console.WriteLine("List of Flights: \n");
-                Console.WriteLine("Flight Id:" + flightId);
-            }
-        }
        
            
         // check if the booking works 
@@ -121,15 +102,24 @@ namespace FlightProject2129
                 bookingList[numBookings] = new Booking(bookingNum, customers, bookingDate);
                 numBookings++;
                 return true;
+                // ADD ERROR CODE
+                
             }
             return false;
         }
+        //ADD NUM PASSENGER = MAX SEATS THEN GIVE ERROR
 
+        
+
+        
 
 
         public override string ToString()
         {
             string s = "------------Bookings------------"
+            string s = "---------Bookings---------"
+            string s = base.ToString();
+ 
             for (int i = 0; i < numBookings; i++)
             {
                 s = s + bookingList[i].ToString();
