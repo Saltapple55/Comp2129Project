@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "FlightProject2129/1.0.0": {
+        "runtime": {
+          "FlightProject2129.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "FlightProject2129/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

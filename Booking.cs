@@ -18,7 +18,6 @@ namespace FlightProject2129
         {
             this.bookingNum = bookingNum++;
             this.customer = customer;
-            this.customer.increaseNumBooking();
             this.flight = flight;
             this.bookingDate = DateTime.Now.ToString(@"MM\/dd\/yyyy h\:mm tt"); ;
         }
@@ -47,7 +46,7 @@ namespace FlightProject2129
         public override string ToString()
         {
 
-            string s = $"\nCustomer { customer.FirstName} {customer.LastName} \nFlight: {flight.Number} \nBooking Number: {bookingNum} \nBooking Date: {bookingDate}";
+            string s = $"\nCustomer { customer.FirstName} {customer.LastName} \nFlight: {flight.FlightNum} \nBooking Number: {bookingNum} \nBooking Date: {bookingDate}";
 
             return s;
         }

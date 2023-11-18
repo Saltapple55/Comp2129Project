@@ -8,6 +8,10 @@ namespace FlightProject2129
 {
     internal class AirlineCoordinator
     {
+        //enum for errors is an option
+        //function return a string
+        //exceptions-
+        //add a out parameter that happens when error happens-out parameter is string
         CustomerManager custMan;
         FlightManager flightMan;
         BookingManager bookMan;
@@ -23,12 +27,11 @@ namespace FlightProject2129
         public FlightManager FlightManager { get { return flightMan; } }
         public BookingManager BookingManager { get { return bookMan; } }
         //Customer Manager methods
-        public bool addCustomer(string fname, string lname, string phoneNum) {
-            return custMan.addCustomer(fname, lname, phoneNum);
+        public bool addCustomer(string fname, string lname, string phoneNum, out string error) {
+            return custMan.addCustomer(fname, lname, phoneNum, out error);
         }
         public bool deleteCustomer(int index)
         {
-            if (bookMan.)
             return custMan.removeCustomer(index);
         }
         public string viewAllCustomers()
@@ -36,7 +39,7 @@ namespace FlightProject2129
             return custMan.ToString();
         }
         //BookingManager methods
-        public bool addBooking(int flightId, Customer[] custs) {
+        public bool addBooking(Flight f, Customer c) {
 
             return true;
         }
@@ -46,12 +49,18 @@ namespace FlightProject2129
             return bookMan.ToString();
         }
         //FlightManager methods
-        public bool addFlight() { }
+        public bool addFlight(int flightNum, string flightDest, string flightOrigin, int maxSeats) 
+        {
+            return flightMan.addFlight(flightNum, flightDest, flightOrigin, maxSeats);
+        }
         public string viewOneFlight()
         {
             return flightMan.ToString();
         }
-
+        public bool deleteFlight(int index)
+        {
+            return flightMan.removeFlight(index);
+        }
         public string viewAllFlights()
         {
             return flightMan.ToString();

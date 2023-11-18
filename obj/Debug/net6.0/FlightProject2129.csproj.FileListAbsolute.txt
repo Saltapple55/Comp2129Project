@@ -1,0 +1,15 @@
+C:\Users\tjand\source\repos\FlightProject2129\FlightProject2129\bin\Debug\net6.0\FlightProject2129.exe
+C:\Users\tjand\source\repos\FlightProject2129\FlightProject2129\bin\Debug\net6.0\FlightProject2129.deps.json
+C:\Users\tjand\source\repos\FlightProject2129\FlightProject2129\bin\Debug\net6.0\FlightProject2129.runtimeconfig.json
+C:\Users\tjand\source\repos\FlightProject2129\FlightProject2129\bin\Debug\net6.0\FlightProject2129.dll
+C:\Users\tjand\source\repos\FlightProject2129\FlightProject2129\bin\Debug\net6.0\FlightProject2129.pdb
+C:\Users\tjand\source\repos\FlightProject2129\FlightProject2129\obj\Debug\net6.0\FlightProject2129.csproj.AssemblyReference.cache
+C:\Users\tjand\source\repos\FlightProject2129\FlightProject2129\obj\Debug\net6.0\FlightProject2129.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\tjand\source\repos\FlightProject2129\FlightProject2129\obj\Debug\net6.0\FlightProject2129.AssemblyInfoInputs.cache
+C:\Users\tjand\source\repos\FlightProject2129\FlightProject2129\obj\Debug\net6.0\FlightProject2129.AssemblyInfo.cs
+C:\Users\tjand\source\repos\FlightProject2129\FlightProject2129\obj\Debug\net6.0\FlightProject2129.csproj.CoreCompileInputs.cache
+C:\Users\tjand\source\repos\FlightProject2129\FlightProject2129\obj\Debug\net6.0\FlightProject2129.dll
+C:\Users\tjand\source\repos\FlightProject2129\FlightProject2129\obj\Debug\net6.0\refint\FlightProject2129.dll
+C:\Users\tjand\source\repos\FlightProject2129\FlightProject2129\obj\Debug\net6.0\FlightProject2129.pdb
+C:\Users\tjand\source\repos\FlightProject2129\FlightProject2129\obj\Debug\net6.0\FlightProject2129.genruntimeconfig.cache
+C:\Users\tjand\source\repos\FlightProject2129\FlightProject2129\obj\Debug\net6.0\ref\FlightProject2129.dll

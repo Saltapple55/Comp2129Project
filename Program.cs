@@ -7,45 +7,14 @@ namespace FlightProject2129
     {
         public static void Main(string[] args)
         {
-            Menu();
-
-
-        }
-
-        public static void Menu()
-        {
-            Console.WriteLine("Welcome to XYZ Airlines Limited");
-            string s = @"
-
-
-                                                     ##
-                                                   ####                             ##
-                                                #######                           ####  
-                                               ########                         #####
-                                   _______rrrrrrrrrrrrrrrrrr_________         ###### 
-                                ############################### ###################
-                            ######################################################
-                           /      )##########( )####( )####( )####( )#############
-                            ##############\\#####################################
-                             ---/////////// \\#####\\##\\///////////////---\\#####\
-                                              \\####\\##\\                    \\###\
-                                                \\###\\#\\                      \\#\
-                                                   \\#\\#\
-
-
-            ";
-            Console.WriteLine(s);
-            Console.WriteLine("Please select a choice from the menu below:");
-            Console.WriteLine("");
-            Console.WriteLine("1: Customers");
-            Console.WriteLine("2: Flights");
-            Console.WriteLine("3: Bookings");
-            char c = Console.ReadKey().KeyChar;
-            
-
-
-
+            CustomerManager custMan = new CustomerManager(10);
+            FlightManager flightMan = new FlightManager(10);
+            BookingManager bookMan= new BookingManager(10);
+            AirlineCoordinator airCon = new AirlineCoordinator(custMan, flightMan, bookMan);
+            Menu.MainMenu(airCon);
 
         }
+
+       
     }
 }

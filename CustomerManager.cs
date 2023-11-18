@@ -13,6 +13,14 @@ namespace FlightProject2129
         private int maxCustomers;
         private Customer[] customerList;
 
+        //override Constructor t
+        //d://reative address
+        public CustomerManager(string location)
+        {
+            //load from file
+        }
+
+
         public CustomerManager(int max) 
         {
             maxCustomers = max;
@@ -25,15 +33,24 @@ namespace FlightProject2129
             get { return numCustomers; }
         }
        
-        public bool addCustomer(string fname, string lname, string phoneNum)
+        public bool addCustomer(string fname, string lname, string phoneNum, out string error)
         {
+            
             if (numCustomers < maxCustomers && !checkCustomerExists(fname, lname, phoneNum)) //checks if there is space
             {
                 Customer c = new Customer( fname, lname, phoneNum); //creating customer object with attributes
                 customerList[numCustomers] = c; //adding new customer into array
                 numCustomers++; //incremeting so it can loop back to create new customers until there is no more space
+                error = "";
                 return true;
             }
+            if (checkCustomerExists(fname, lname, phoneNum))
+            {
+                error = "Customer already exists";
+
+            }
+            else
+                error = "Cannot add any new Customers";
             return false; //once it is full
         }
         public Customer viewCustomer(string custFname, string custLname, string phoneNum)
