@@ -18,6 +18,10 @@ namespace FlightProject2129
         private string phoneNum;
         private int numBookings;
 
+        public static void getCustIDgenerator(int num)
+        {
+            custIDGenerator = num;
+        }
         public Customer( string firstName, string lastName, string phoneNum)
         {
             custID = ++custIDGenerator;
