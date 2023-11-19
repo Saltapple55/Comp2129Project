@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -30,18 +30,29 @@ namespace FlightProject2129
         public bool addCustomer(string fname, string lname, string phoneNum, out string error) {
             return custMan.addCustomer(fname, lname, phoneNum, out error);
         }
-        public bool deleteCustomer(int index)
+        public bool deleteCustomer(int index, out string error)
         {
-            return custMan.removeCustomer(index);
+            return custMan.removeCustomer(index, out error);
         }
         public string viewAllCustomers()
         {
             return custMan.ToString();
         }
         //BookingManager methods
-        public bool addBooking(Flight f, Customer c) {
+        public bool addBooking(Flight f, Customer c, out string error) {
 
-            return true;
+            if(flightMan.NumFlights == 0)
+            {
+                error = "No flights to book";
+                return false;
+            }
+            if(custMan.NumCustomers == 0)
+            {
+                error = "No Customers to book";
+                return false;
+            }
+
+            return bookMan.addBooking(c, f, out error);
         }
         
         public string viewAllBookings()
@@ -49,17 +60,17 @@ namespace FlightProject2129
             return bookMan.ToString();
         }
         //FlightManager methods
-        public bool addFlight(int flightNum, string flightDest, string flightOrigin, int maxSeats) 
+        public bool addFlight(int flightNum, string flightDest, string flightOrigin, int maxSeats, out string error) 
         {
-            return flightMan.addFlight(flightNum, flightDest, flightOrigin, maxSeats);
+            return flightMan.addFlight(flightNum, flightDest, flightOrigin, maxSeats, out error);
         }
         public string viewOneFlight()
         {
             return flightMan.ToString();
         }
-        public bool deleteFlight(int index)
+        public bool deleteFlight(int index, out string error)
         {
-            return flightMan.removeFlight(index);
+            return flightMan.removeFlight(index, out error);
         }
         public string viewAllFlights()
         {
