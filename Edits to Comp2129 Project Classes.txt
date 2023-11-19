@@ -1,7 +1,8 @@
 Changes to Comp2129 Project
 General Changes
-- added abstract class Manager, with enforced ToString(), checkDuplicate()
 -almost all methods in manager classs that pull information from other managers has been moved to Coordinator
+-removed all console.writelines-added error string for relevant functions
+-added a clause to all ToString methods for managers if list has nothing in it.
 
 Customer/Customermanager
 -made constructor public instead of private for CustomerManager
@@ -21,12 +22,20 @@ Customer/Customermanager
 
 Booking/BookingManager
 -Booking gets sent back for multiple changes
+-revamped checkBooking Exists to go over a for loop through bookingList
+-deleted methods view flights, view customers, 
+-changed the addBooking() method to the appropriate parameters. Added error for if flight is full
+	-changed can'd add bookings error to activate only if numbookings == maxbookings, not less than
+-changed all for loops to be for (int i = 0; i < numBookings; i++) instead of maxBookings
 
 Flight/FlightManager
 -Flight and Flight Manager gets sent back for multiple changes
-#-changed class name/constructor from Flights to Flight
-#-deleted Flight[] passengerList from FlightManager
-#-moved numPassengers/maxSeats to Flight from FlightManager, changed constructor accordingly
+-made PassengerList in Flight a Customer list;
+-changed removeFlight to look at index. now only checks if it has customer or not. This works in conjuction with static getValidIndexInput().
+	-Also when removing flight, adds flight at the back of list to where Flight was removed to avoid nulls in the middle of list
+-made ToString() list return a value
+-implemented viewParticularFlight();
+-added \n to tostrings
 
 
 Questions to ask: 
