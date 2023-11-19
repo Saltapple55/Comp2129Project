@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -36,7 +36,6 @@ namespace FlightProject2129
 
         public bool addCustomer(Customer customer)
         {
-            if()
             if (numPassengers < maxSeats)
             {
                 passengerList[numPassengers] = customer;
@@ -45,14 +44,36 @@ namespace FlightProject2129
             }
             else return false;
         }
-        
 
+        public string flightInfo()
+        {
+            string s = "\nFlight Number: " + flightId +
+            "\nFlight Destination: " + flightDest +
+            "\nFlight Origin: " + flightOrigin;
+            return s;
+        }
 
         public override string ToString()
         {
-            string s = "Flight Number: " + flightId +
-                        "Flight Destination: " + flightDest +
-                        "Flight Origin: " + flightOrigin;
+            string s = $"------------Flight--------------"+
+                         "\nFlight Number: " + flightId +
+                        "\nFlight Destination: " + flightDest +
+                        "\nFlight Origin: " + flightOrigin +
+                        "\nNumber of Passengers: " + numPassengers +
+                        "\nMaximum Passengers: " + maxSeats +
+                        $"\n------Customers in Flight {flightId}------\n";
+            if (numPassengers == 0)
+            {
+                s = s + "There are no Customers in the Flight";
+            }
+            else
+            {
+                for (int i = 0; i < numPassengers; i++)
+                {
+                    s = s + $"{i + 1}. {passengerList[i].ToString()}";
+                    s = s + "\n -------------------------------\n";
+                }
+            }
             return s;
         }
         
