@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,15 +8,19 @@ namespace FlightProject2129
 {
     internal class Booking
     {
-        private int bookingNum = 0;
+        private static int bookingNumGenerator = 0;
+        private int bookingNum;
         private Customer customer;
         private Flight flight;
         private string bookingDate;
 
-
+        public static void getBookingNumGenerator(int num)
+        {
+            bookingNumGenerator = num;
+        }
         public Booking(Customer customer, Flight flight)
         {
-            this.bookingNum = bookingNum++;
+            this.bookingNum = ++bookingNumGenerator;
             this.customer = customer;
             this.flight = flight;
             this.bookingDate = DateTime.Now.ToString(@"MM\/dd\/yyyy h\:mm tt"); ;
