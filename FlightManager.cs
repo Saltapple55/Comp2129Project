@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,29 +23,34 @@ namespace FlightProject2129
 
         public int NumFlights { get { return numFlights; } }
 
-        public bool addFlight(int flightNum, string flightDest, string flightOrigin, int maxSeats)
+        public bool addFlight(int flightNum, string flightDest, string flightOrigin, int maxSeats, out string error)
         {
             if (!flightExists(flightNum))
             {
                 flightList[numFlights] = new Flight(flightNum, flightDest, flightOrigin, maxSeats);
                 numFlights++;
+                error = "";
                 return true;
             }
+            error = "Flight number already exists";
             return false;
         }
-
+        public Flight getFlight(int index)
+        {
+            return flightList[index];
+        }/*
         public string viewFlights(int flightNum, string flightDest, string flightOrigin)
         {
+            
            
                 string s = "Flight Number: " + flightNum +
                             "Flight Destination: " + flightDest +
                             "Flight Origin: " + flightOrigin;
                 return s;
             
-            return null;
-        }
+        }*/
 
-        public bool flightExists(int flightNum)
+        private bool flightExists(int flightNum)
         {
             for (int i = 0; i < numFlights; i++) 
             {
@@ -57,28 +62,46 @@ namespace FlightProject2129
             return false;
         }
 
-        public string viewParticularFlight()
+        public string viewParticularFlight(int flightNum)
         {
-            string s = "";
-            return s;
-        }
-
-        public bool removeFlight(int flightNum)
-        {
-            if (flightExists(flightNum))
+            for (int i = 0; i<numFlights; i++)
             {
-
-                flightList[numFlights] = null;
-                numFlights--;
-                return true;
-
+                if (flightList[i].FlightNum == flightNum)
+                    return flightList[i].ToString();
             }
-            return false;
+            return "Flight does not exist";
         }
 
-        public string ToString()
+        public bool removeFlight(int index, out string error)
         {
-            string s = "";
+
+            if (flightList[index].NumPassengers > 0)
+            {
+                error = "Flight cannot be deleted because Customers have already booked it";
+                return false;
+            }
+           
+            flightList[index] = flightList[numFlights-1];
+            flightList[numFlights-1]= null;
+            numFlights--;
+            error = "";
+            return true;
+
+            
+        }
+
+        public override string ToString()
+        {
+            if (numFlights == 0)
+            {
+                return "There are currently no flights";
+            }
+            string s = "------------Flight List-------------\n";
+            for (int i = 0; i < numFlights; i++)
+            {
+                s = s + $"{i + 1}. {flightList[i].flightInfo()}";
+                s = s + "\n -------------------------------\n";
+            }
             return s;
         }
 
