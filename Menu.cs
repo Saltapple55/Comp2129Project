@@ -1,8 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 //All functions that print to console go here. The only class this interacts with is the Airline Coordinator
@@ -42,7 +44,7 @@ namespace FlightProject2129
             do
             {
 
-                Console.WriteLine("Please select a choice from the menu below:");
+                Console.WriteLine("\nPlease select a choice from the menu below:");
                 Console.WriteLine("");
                 Console.WriteLine("1: Customers");
                 Console.WriteLine("2: Flights");
@@ -50,6 +52,8 @@ namespace FlightProject2129
                 Console.WriteLine("4: Exit");
 
                 c = Console.ReadKey().KeyChar;
+                Console.WriteLine("");
+
 
                 switch (c)
                 {
@@ -84,7 +88,7 @@ namespace FlightProject2129
             string error;
             while(true)
             {
-                Console.WriteLine("----------------Customer Menu---------------");
+                Console.WriteLine("\n----------------Customer Menu---------------");
                 Console.WriteLine("");
                 Console.WriteLine("Please select a choice from the menu below:");
                 Console.WriteLine("");
@@ -94,18 +98,20 @@ namespace FlightProject2129
                 Console.WriteLine("4: Return to main menu");
 
                 c = Console.ReadKey().KeyChar;
+                Console.WriteLine("");
+
 
                 switch (c)
                 {
                     case '1':
                         Console.WriteLine("Please enter the first name");
-                        fname = Console.ReadLine();
+                        fname = getInput();
                         Console.WriteLine("Please enter the last name");
-                        lname = Console.ReadLine();
-                        Console.WriteLine("Please enter the phone number");
-                        phone = Console.ReadLine();
+                        lname = getInput();
+                        Console.WriteLine("Please enter the phone number in format: 'XXX-XXX-XXXX'");
+                        phone = getPhoneInput();
                         if (airCon.addCustomer(fname, lname, phone, out error)) Console.WriteLine("Thank you for adding a new Customer");
-                        else Console.WriteLine("No more room for customers");
+                        else Console.WriteLine(error);
                          break;
                     case '2':
                         Console.WriteLine(airCon.CustomerManager); break;
@@ -113,8 +119,8 @@ namespace FlightProject2129
                         Console.WriteLine(airCon.CustomerManager);
                         Console.WriteLine("Please type the number of the customer you'd like to delete");
                         index = getValidIndexInput(airCon.CustomerManager.NumCustomers);
-                        if (airCon.deleteCustomer(index)) Console.WriteLine("Customer has been removed");
-                        else Console.WriteLine("Customer not found");
+                        if (airCon.deleteCustomer(index, out error)) Console.WriteLine("Customer has been removed");
+                        else Console.WriteLine(error);
                         
                         break;
                     case '4':
@@ -139,7 +145,7 @@ namespace FlightProject2129
             string error;
             while (true)
             {
-                Console.WriteLine("----------------Flight Menu---------------");
+                Console.WriteLine("\n----------------Flight Menu---------------");
                 Console.WriteLine("");
                 Console.WriteLine("Please select a choice from the menu below:");
                 Console.WriteLine("");
@@ -150,6 +156,8 @@ namespace FlightProject2129
                 Console.WriteLine("5: Return to main menu");
 
                 c = Console.ReadKey().KeyChar;
+                Console.WriteLine("");
+
 
                 switch (c)
                 {
@@ -157,27 +165,27 @@ namespace FlightProject2129
                         Console.WriteLine("Please enter the flight number");
                         fnum = getIntInput();
                         Console.WriteLine("Please enter the origin of the flight");
-                        org = Console.ReadLine();
+                        org = getInput();
                         Console.WriteLine("Please enter the destination of the flight");
-                        dest = Console.ReadLine();
+                        dest = getInput();
                         Console.WriteLine("Please enter the maximum seats on this flight");
                         maxseats = getIntInput();
-                        if (airCon.addFlight(fnum, dest, org, maxseats)) Console.WriteLine("Thank you for adding a new Flight");
-                        else Console.WriteLine("Flight could not be added");
+                        if (airCon.addFlight(fnum, dest, org, maxseats, out error)) Console.WriteLine("Thank you for adding a new Flight");
+                        else Console.WriteLine(error);
                         break;
                     case '2':
                         Console.WriteLine(airCon.FlightManager); break;
                     case '3':
-                        Console.WriteLine(airCon.FlightManager);
-                        Console.WriteLine("Please type the number of the flight you'd like to view");
-                        index = getValidIndexInput(airCon.FlightManager.NumFlights);
+                        Console.WriteLine("Please enter the flight number");
+                        fnum = getIntInput();
+                        Console.WriteLine(airCon.FlightManager.viewParticularFlight(fnum));
 
                         break;
                     case '4':
                         Console.WriteLine(airCon.FlightManager); 
                         Console.WriteLine("Please type the number of the flight you'd like to delete");
                         index = getValidIndexInput(airCon.FlightManager.NumFlights);
-                        if (airCon.deleteCustomer(index)) Console.WriteLine("Flight has been removed");
+                        if (airCon.deleteCustomer(index, out error)) Console.WriteLine("Flight has been removed");
                         else Console.WriteLine(error);
                         break;
                     case '5':
@@ -192,7 +200,63 @@ namespace FlightProject2129
         }
         public static void BookingMenu(AirlineCoordinator airCon)
         {
+            char c;
+            string error;
+            int cindex;
+            int findex;
+            while (true) { 
 
+            Console.WriteLine("\n----------------Booking Menu---------------");
+            Console.WriteLine("");
+            Console.WriteLine("Please select a choice from the menu below:");
+            Console.WriteLine("");
+            Console.WriteLine("1: Add Booking");
+            Console.WriteLine("2: View Booking");
+            Console.WriteLine("3: Return to main menu");
+
+            c = Console.ReadKey().KeyChar;
+            Console.WriteLine("");
+
+                switch (c)
+                {
+                    case '1':
+                        if (airCon.CustomerManager.NumCustomers == 0 || airCon.FlightManager.NumFlights == 0)
+                        {
+                            Console.WriteLine("Can't making a booking without both existing Customers and Flights");
+                            continue;
+                        }
+                        Console.WriteLine(airCon.CustomerManager);
+                        Console.WriteLine("Please type the number of the customer making the booking");
+                        cindex = getValidIndexInput(airCon.CustomerManager.NumCustomers);
+                        Console.WriteLine(airCon.FlightManager);
+                        Console.WriteLine("Please type the number of the flight you'd like to add");
+                        findex = getValidIndexInput(airCon.FlightManager.NumFlights);
+                        if (airCon.BookingManager.addBooking(airCon.CustomerManager.getCustomer(cindex), airCon.FlightManager.getFlight(findex), out error))
+                        { Console.WriteLine("Added Booking"); }
+                        else Console.WriteLine(error);
+                        break;
+                    case '2':
+                        Console.WriteLine(airCon.BookingManager); break;
+                    case '3':
+                        return; break;
+                    default: Console.WriteLine("Incorrect input, please try again."); break;
+                }
+            }
+
+        }
+        public static string getInput()
+        {
+            string input;
+            while (true)
+            {
+                input = Console.ReadLine();
+                //only thing it checks for is whether there is an input
+                if (!string.IsNullOrEmpty(input))
+                {
+                    //Console.WriteLine("\n");
+                    return input; 
+                }
+            }
         }
         public static int getIntInput()
         {
@@ -200,7 +264,7 @@ namespace FlightProject2129
             string input;
             while (true)
             {
-                input=Console.ReadLine();
+                input=getInput();
                 if (!Int32.TryParse(input, out num))
                 {
                     Console.WriteLine("Not a number, try again.");
@@ -220,25 +284,40 @@ namespace FlightProject2129
         {
             int num;
             string input;
-            while (true) {
-                input = Console.ReadLine();
-
-                if (!Int32.TryParse(input, out num))
-                {
-                    Console.WriteLine("Not a number, try again.");
-                }
-                else if (num >= arrlength)
+            while (true)
+            {
+                num = getIntInput();
+                if (num > arrlength)
                 {
                     Console.WriteLine("Number not in list bounds, try again");
                 }
-                else if (num <= 0)
+                else
+                    //reduces because list starts from 1, but real index will start from 0
+                    return num - 1;
+            
+            }
+           
+        }
+
+        public static string getPhoneInput()
+        {
+            string input;
+            string phonePattern = @"([0-9]{3})-([0-9]{3})-([0-9]{4})";
+            Regex phone = new Regex(phonePattern);
+            while (true) {
+                input = getInput();
+                Match match = phone.Match(input);
+                if (match.Success)
                 {
-                    Console.WriteLine("Please put a positive number, try again");
+                    return input;
+
                 }
                 else
-                //reduces because list starts from 1, but real index will start from 0
-                    return num-1;
+                {
+                    Console.WriteLine("Invalid Phone Number");
                 }
+            }
+
         }
 
     }
