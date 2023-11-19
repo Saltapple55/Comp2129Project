@@ -1,21 +1,19 @@
 using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 
 namespace FlightProject2129
 {
     internal class BookingManager
     {
+        //add booking manager method to get all customers in flight
         private int maxBookings;
         private int numBookings;
         private Booking[] bookingList;
-
-
+        
         public BookingManager(int max)
         {
             this.maxBookings = max;
@@ -23,107 +21,77 @@ namespace FlightProject2129
             bookingList = new Booking[max];
         }
 
-        public Customer[] getCustomersInFlight(Flight f)
-        {
-            Customer[] flightCustomer = new Customer[Booking.Length];
-            int count = 0;
+        // Show Customers
 
-            for (int i = 0; i < Booking.Length; i++)
-            {
-                // unsure if to use getFlight or Flight 
-                if (Booking[i].Flight().Equals(f))
-                {
-                    flightCustomer[count++] = Booking[i].Customer;
-                }
 
-            }
-            // copy with only length of count 
-            Customer[] custinFlight = new Customer[count];
-            Array.Copy(flightCustomer, custinFlight, count);
-            Console.WriteLine("This is the customers in flight: ");
-            return custinFlight;
-
-        }
 
         // check if the booking works 
-        public bool IsBookingValid(int custId, int flightId)
-        {
-            // I NEED THE CUSTOMER AND FLIGHT 
-            Customer selectedCustomer = findcustId(custId);
-            Flight selectedFlight = findflightId(flightId);
-            Booking existingBooking = FindBookingByCustomerAndFlightId(customerId, flightId);
+        /* public bool IsBookingValid(int custId, int flightId)
+         {
+             // I NEED THE CUSTOMER AND FLIGHT 
+             Customer selectedCustomer = findcustId(custId);
+             Flight selectedFlight = findflightId(flightId);
+             Booking existingBooking = FindBookingByCustomerAndFlightId(customerId, flightId);
 
-            return selectedCustomer != null && selectedFlight != null && selectedFlight.AvailableSeats > 0 && existingBooking == null;
+             return selectedCustomer != null && selectedFlight != null && selectedFlight.AvailableSeats > 0 && existingBooking == null;
+         }*/
+
+        // NEED THE CUSTOMER 
+        //FIND CUSTOMER
+
+        //standard adding of booking
+        
+        private bool checkBookingExists(int custId, int flightId)
+        {
+            for (int i = 0; i < numBookings; i++)
+            {
+
+                if (bookingList[i].Flight.FlightNum == flightId && bookingList[i].Customer.CustID == custId)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
-
-        public bool addBooking (string fName, string lName, string phoneNum, out string error)
+        public bool addBooking(Customer customer, Flight flight, out string error)
         {
-            if (numBookings < maxBookings && !checkBookingExists(fName,lName, phoneNum))
-            {
-                Booking b = new Booking(fName, lName, phoneNum);
-                bookingList[numBookings] = b;
-                numBookings++;
-                error = "";
-                return true;
-            }
-            if (checkBookingExists(fName, lName, phoneNum))
+            if (checkBookingExists(customer.CustID, flight.FlightNum))
             {
                 error = "Booking already exists";
+                return false;
             }
-            else
-                error = "can't add any new Customers to this Booking";
-            return false;
-        }
+            else if (numBookings == maxBookings)
+            {
+                error = "Can't add any new Bookings";
+                return false;
+            }
+            //if this function is false, returns error, otherwise adds a customer and Booking is good to go
+            if (!flight.addCustomer(customer))
+            {
+                error = "Flight is full, cannot accept any new Customers";
+                return false;
+            }
+            customer.increaseNumBooking();
 
-        public bool checkBookingExists(int custId, int flightId)
-        {
+
             
-                if (flightList[i].flightId == flightId && customerList[i].custId == custId)
-            {
-                return true;
-            }
-            return false;
+            bookingList[numBookings] = new Booking(customer, flight);
+            numBookings++;
+            error = "";
+            return true;
+                // ADD ERROR CODE
+
         }
- 
-        
-
-     // another way to add the booking. keeping this here in case 
-
-        public bool addBooking(int bookingNum, Customer customer, Flight flight, string bookingDate)
-        {
-
-            // Get the customer ID and flight ID
-            Console.WriteLine("\nEnter the Customer Id Please: ");
-            int custId = int.Parse(Console.ReadLine());
-            Console.WriteLine("\nEnter the Flight Id Please: ");
-            int flightId = int.Parse(Console.ReadLine());
-
-
-            // if the booking didn't match 
-
-            if (!isBookingValid(custId, flightId))
-            {
-                return null;
-                //Console.WriteLine("Booking does not match the customer or flight Id please try again.");
-            }
-
-
-            // KEEP THIS TO PREVENT USING TOO MUCH MEMORY ??? 
-            if (numBookings < maxBookings)
-            {
-                bookingList[numBookings] = new Booking(bookingNum, customer, flight, bookingDate);
-                numBookings++;
-                return true;
-            }
-            return false;
-        }
-
-
 
         public override string ToString()
         {
-            string s = base.ToString();
+            if(numBookings == 0)
+            {
+                return "No Bookings have been made yet";
+            }
+            string s = "---------Bookings---------\n";
+
             for (int i = 0; i < numBookings; i++)
             {
                 s = s + bookingList[i].ToString();
@@ -133,3 +101,4 @@ namespace FlightProject2129
         }
     }
 }
+
