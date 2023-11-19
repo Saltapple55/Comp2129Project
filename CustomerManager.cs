@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO.IsolatedStorage;
 using System.Linq;
@@ -53,6 +53,10 @@ namespace FlightProject2129
                 error = "Cannot add any new Customers";
             return false; //once it is full
         }
+        public Customer getCustomer( int index)
+        {
+            return customerList[index];
+        }
         public Customer viewCustomer(string custFname, string custLname, string phoneNum)
         {
             for (int i = 0; i < numCustomers; i++)
@@ -81,22 +85,33 @@ namespace FlightProject2129
             return false; //this means customer is not duplicate
         }
 
-        public bool removeCustomer(int index)
+        public bool removeCustomer(int index, out string error)
         {
-            if (index < numCustomers) { 
-                    //next two lines moves customer from back of array to where customer was removed, and empties old spot
-                    customerList[index] = customerList[numCustomers- 1];
-                    customerList[numCustomers - 1] = null;
-                    numCustomers--;
-                    return true;
-                }
+            if (customerList[index].NumBookings>0) {
+                error = "Customer could not be deleted because they have already made bookings";
+                return false;
+                
+            }
+            else
+            {
+                //next two lines moves customer from back of array to where customer was removed, and empties old spot
+                customerList[index] = customerList[numCustomers - 1];
+                customerList[numCustomers - 1] = null;
+                numCustomers--;
+                error = "";
+                return true;
+            }
             //redundancy failsafe-should never trigger because because getValidIndex() will never give anything >=numCustomers
-            return false;
         }
 
        
         public override string ToString()
         {
+            if (numCustomers == 0)
+            {
+                return "There are currently no customers";
+
+            }
             string s = "------------Customer List-------------\n";
             for (int i = 0; i < numCustomers; i++)
             {
