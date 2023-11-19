@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -10,7 +10,9 @@ namespace FlightProject2129
     internal class Customer
     {
         //remember to make custID read from file when you learn how
-        private static int custID=0;
+        private static int custIDGenerator=0;
+        private int custID;
+
         private string custFName;
         private string custLName;
         private string phoneNum;
@@ -18,7 +20,7 @@ namespace FlightProject2129
 
         public Customer( string firstName, string lastName, string phoneNum)
         {
-            custID = ++custID;
+            custID = ++custIDGenerator;
             custFName = firstName;
             custLName = lastName;
             this.phoneNum = phoneNum;
@@ -53,7 +55,7 @@ namespace FlightProject2129
         }
         public override string ToString()
         {
-            string s = "First Name: " + custFName;
+            string s = "\nFirst Name: " + custFName;
             s = s + "\nLast Name: " + custLName;
             s = s + "\nPhone Number: " + phoneNum;
             return s;
