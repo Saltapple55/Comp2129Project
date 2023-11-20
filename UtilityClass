@@ -1,0 +1,131 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace FlightProject2129
+{
+    class UtilityClass
+    {
+        public static void saveCustomers(string location, Customer[] customer, int num)
+        {
+            StreamWriter sw = new StreamWriter(location);
+            sw.WriteLine(num);
+            for (int i = 0; i < num; i++) 
+            {
+                // this would get the first name and last name and phone number 
+                sw.Write(customer[i].FirstName() + " " + customer[i].LastName() + " " +
+                    customer[i].PhoneNum());
+
+            }
+            sw.Close();
+        }
+
+        public static void saveFlights(string location, Flight[] flight, int num)
+        {
+            StreamWriter sw = new StreamWriter(location);
+            sw.WriteLine(num);
+            for (int i = 0; i < num; i++)
+            {
+                // getting all the flight info
+                sw.Write(flight[i].NumPassengers() + " " + flight[i].FlightNum() + " " +
+                    flight[i].FlightDest() + " " + flight[i].FlightOrigin());
+
+            }
+            sw.Close();
+        }
+
+
+        public static void saveBookings(string location, Booking[] booking, int num)
+        {
+            StreamWriter sw = new StreamWriter(location);
+            sw.WriteLine(num);
+            for (int i = 0; i < num; i++)
+            {
+                // getting all the flight info
+                sw.Write(booking[i].BookingNum() + " " + booking[i].BookingDate() + " " +
+                    booking[i].Customer() + " " + booking[i].Flight());
+
+            }
+            sw.Close();
+        }
+
+        // We have the Customer array
+        // take the location as a parameter
+        public static Customer[] loadCustomer(string location)
+        {
+            int num;
+            string line;
+            Customer[] temp;
+            StreamReader sr = new StreamReader(location);
+            num = Convert.ToInt32(sr.ReadLine());
+            // take the customer and make array named temp to store the customer with the number size given
+            temp = new Customer[num];
+
+            for (int i = 0; i < num; i++)
+            {
+                line = sr.ReadLine();
+                // parts of the customer that we saved, so name and phone number 
+                string[] parts = line.Split();
+                // this would get the first name, last name, phone number
+                temp[i] = new Customer(parts[0], parts[1], parts[2]);
+
+            }
+            // always close it or else itll have an unhandled exception 
+            sr.Close();
+            return temp;
+        }
+
+        public static Flight[] loadFlight(string location)
+        {
+            int num;
+            string line;
+            Flight[] temp;
+            StreamReader sr = new StreamReader(location);
+            num = Convert.ToInt32(sr.ReadLine());
+            // take the flight and make array named temp to store the flight with the number size given
+            temp = new Flight[num];
+
+            for (int i = 0; i < num; i++)
+            {
+                line = sr.ReadLine();
+                string[] parts = line.Split();
+                // this would get the number, passenger, convert to int both origin, desitnation
+                temp[i] = new Flight(Convert.ToInt32(parts[0]), Convert.ToInt32(parts[1]), parts[2], parts[3]);
+
+            }
+            // always close it or else itll have an unhandled exception 
+            sr.Close();
+            return temp;
+        }
+
+
+        public static Booking[] loadBooking(string location)
+        {
+            int num;
+            string line;
+            Booking[] temp;
+            StreamReader sr = new StreamReader(location);
+            num = Convert.ToInt32(sr.ReadLine());
+            // take the flight and make array named temp to store the customer with the number size given
+            temp = new Booking[num];
+
+            for (int i = 0; i < num; i++)
+            {
+                line = sr.ReadLine();
+                string[] parts = line.Split();
+                // this would get the number, date, customer, flight
+                // a little unsure of the flight and custoemr part since they both arrays 
+                temp[i] = new Booking(Convert.ToInt32(parts[0]), parts[1], parts[2], parts[3]);
+
+            }
+            // always close it or else itll have an unhandled exception 
+            sr.Close();
+            return temp;
+
+        }
+
+
+    }
+}
