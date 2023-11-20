@@ -26,6 +26,16 @@ namespace FlightProject2129
             this.bookingDate = DateTime.Now.ToString(@"MM\/dd\/yyyy h\:mm tt"); ;
         }
 
+        
+        // made a new constructor for the loading and saving of files
+        public Booking(int bookingNum, Customer customer, Flight flight, string bookingDate)
+        {
+            this.bookingNum = bookingNum;
+            this.customer = customer;
+            this.flight = flight;
+            this.bookingDate = bookingDate;
+        }
+
         public Customer Customer
         {
             get { return customer; }
