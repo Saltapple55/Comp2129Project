@@ -77,32 +77,6 @@ namespace FlightProject2129
             return temp;
         }
 
-        // We have the Customer array
-        // take the location as a parameter
-        public static Customer[] loadCustomer(string location)
-        {
-            int num;
-            string line;
-            Customer[] temp;
-            StreamReader sr = new StreamReader(location);
-            num = Convert.ToInt32(sr.ReadLine());
-            // take the customer and make array named temp to store the customer with the number size given
-            temp = new Customer[num];
-
-            for (int i = 0; i < num; i++)
-            {
-                line = sr.ReadLine();
-                // parts of the customer that we saved, so name and phone number 
-                string[] parts = line.Split();
-                // this would get the first name, last name, phone number
-                temp[i] = new Customer(parts[0], parts[1], parts[2]);
-
-            }
-            // always close it or else itll have an unhandled exception 
-            sr.Close();
-            return temp;
-        }
-
         public static Flight[] loadFlight(string location)
         {
             int num;
@@ -118,7 +92,7 @@ namespace FlightProject2129
                 line = sr.ReadLine();
                 string[] parts = line.Split();
                 // this would get the number, passenger, convert to int both origin, desitnation
-                temp[i] = new Flight(Convert.ToInt32(parts[0]), Convert.ToInt32(parts[1]), parts[2], parts[3]);
+                temp[i] = new Flight(Convert.ToInt32(parts[0]), parts[1], parts[2], Convert.ToInt32(parts[3]));
 
             }
             // always close it or else itll have an unhandled exception 
@@ -127,6 +101,7 @@ namespace FlightProject2129
         }
 
 
+        // this is a tester for now 
         public static Booking[] loadBooking(string location)
         {
             int num;
@@ -141,9 +116,12 @@ namespace FlightProject2129
             {
                 line = sr.ReadLine();
                 string[] parts = line.Split();
+
+                // ASK ANDREW WHATS A BETTER WAY TO LOAD AN ARRAY 
+
                 // this would get the number, date, customer, flight
-                // a little unsure of the flight and custoemr part since they both arrays 
-                temp[i] = new Booking(Convert.ToInt32(parts[0]), parts[1], parts[2], parts[3]);
+                // a little unsure of the flight and customer part since they both arrays 
+                temp[i] = new Booking(Convert.ToInt32(parts[0]), parts[1]);
 
             }
             // always close it or else itll have an unhandled exception 
