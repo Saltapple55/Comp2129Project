@@ -13,7 +13,7 @@ namespace FlightProject2129
             // if file exists at this location do not 
             if (File.Exists(location))
             {
-                StreamWriter sw = new StreamWriter(location);
+                StreamWriter sw = new StreamWriter(location,true);
                 sw.WriteLine(num);
                 for (int i = 0; i < num; i++)
                 {
@@ -34,7 +34,7 @@ namespace FlightProject2129
         {
             if (File.Exists(location))
             {
-                StreamWriter sw = new StreamWriter(location);
+                StreamWriter sw = new StreamWriter(location, true);
                 sw.WriteLine(num);
                 for (int i = 0; i < num; i++)
                 {
@@ -54,7 +54,7 @@ namespace FlightProject2129
         {
             if (File.Exists(location))
             {
-                StreamWriter sw = new StreamWriter(location);
+                StreamWriter sw = new StreamWriter(location, true);
                 sw.WriteLine(num);
                 for (int i = 0; i < num; i++)
                 {
