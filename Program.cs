@@ -5,6 +5,10 @@ namespace FlightProject2129
 {
     public class Program
     {
+          private static CustomerManager? custMan;
+        private static FlightManager? flightMan;    
+        private static BookingManager? bookingMan;
+        
         public static void Main(string[] args)
         {
             CustomerManager custMan = new CustomerManager(10);
@@ -17,4 +21,14 @@ namespace FlightProject2129
 
        
     }
+
+          public void saveToDisk(string location)
+        {
+            // add getters to all the lists
+            // // intialize outside of main 
+
+            UtilityClass.saveCustomers(location, custMan.getCustomerList(), custMan.NumCustomers);
+            UtilityClass.saveFlights(location, flightMan.getFlightList(), flightMan.NumFlights);
+            UtilityClass.saveBookings(location, bookingMan.getBookingList(), bookingMan.getNumBookings()); 
+        }
 }
