@@ -4,54 +4,72 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
-// TO TEST PLEASE CHANGE LOCATION TO WHATEVER LOCATION YOU WANT IT IN. I KEPT THE NAME AS LOCATION SO ITS EASY
-
 namespace FlightProject2129
 {
     class UtilityClass
     {
         public static void saveCustomers(string location, Customer[] customer, int num)
         {
-            StreamWriter sw = new StreamWriter(location);
-            sw.WriteLine(num);
-            for (int i = 0; i < num; i++)
+            // if file exists at this location do not 
+            if (File.Exists(location))
             {
-                // this would get the first name and last name and phone number 
-                sw.Write(customer[i].FirstName + " " + customer[i].LastName + " " +
-                    customer[i].PhoneNum);
+                StreamWriter sw = new StreamWriter(location);
+                sw.WriteLine(num);
+                for (int i = 0; i < num; i++)
+                {
+                    // this would get the first name and last name and phone number 
+                    sw.Write(customer[i].FirstName + " " + customer[i].LastName + " " +
+                        customer[i].PhoneNum);
 
+                }
+                sw.Close();
+                Console.WriteLine("Customers Text saved successfully");
+            } else
+            {
+                Console.WriteLine("Error saving customers ");
             }
-            sw.Close();
         }
 
         public static void saveFlights(string location, Flight[] flight, int num)
         {
-            StreamWriter sw = new StreamWriter(location);
-            sw.WriteLine(num);
-            for (int i = 0; i < num; i++)
+            if (File.Exists(location))
             {
-                // getting all the flight info
-                sw.Write(flight[i].NumPassengers + " " + flight[i].FlightNum + " " +
-                    flight[i].FlightDest + " " + flight[i].FlightOrigin);
+                StreamWriter sw = new StreamWriter(location);
+                sw.WriteLine(num);
+                for (int i = 0; i < num; i++)
+                {
+                    // getting all the flight info
+                    sw.Write(flight[i].NumPassengers + " " + flight[i].FlightNum + " " +
+                        flight[i].FlightDest + " " + flight[i].FlightOrigin);
 
+                }
+                sw.Close();
+                Console.WriteLine("Flights Text saved successfuly");
+            } else { Console.WriteLine("Error saving flights"); 
             }
-            sw.Close();
         }
 
 
         public static void saveBookings(string location, Booking[] booking, int num)
         {
-            StreamWriter sw = new StreamWriter(location);
-            sw.WriteLine(num);
-            for (int i = 0; i < num; i++)
+            if (File.Exists(location))
             {
-                // getting all the flight info
-                sw.Write(booking[i].BookingNum + " " + booking[i].BookingDate + " " +
-                    booking[i].Customer + " " + booking[i].Flight);
+                StreamWriter sw = new StreamWriter(location);
+                sw.WriteLine(num);
+                for (int i = 0; i < num; i++)
+                {
+                    // getting all the flight info
+                    sw.Write(booking[i].BookingNum + " " + booking[i].BookingDate + " " +
+                        booking[i].Customer + " " + booking[i].Flight);
+                    // run the customer saving and flight saving for each one 
 
+                }
+                sw.Close();
+                Console.WriteLine("Booking Text saved successfully");
+            } else
+            {
+                Console.WriteLine("Error saving Bookings");
             }
-            sw.Close();
         }
 
         // We have the Customer array
