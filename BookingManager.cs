@@ -21,6 +21,13 @@ namespace FlightProject2129
             bookingList = new Booking[max];
         }
 
+        
+        public Booking[] getBookingList()
+        {
+            return bookingList;
+        }
+
+
         // Show Customers
 
 
