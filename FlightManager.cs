@@ -21,6 +21,12 @@ namespace FlightProject2129
 
         }
 
+        public Flight[] getFlightList()
+        {
+            return flightList;
+        }
+
+
         public int NumFlights { get { return numFlights; } }
 
         public bool addFlight(int flightNum, string flightDest, string flightOrigin, int maxSeats, out string error)
