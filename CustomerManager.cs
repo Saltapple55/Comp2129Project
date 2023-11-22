@@ -20,6 +20,11 @@ namespace FlightProject2129
             //load from file
         }
 
+        public Customer [] getCustomerList()
+        {
+            return customerList;
+        }
+
 
         public CustomerManager(int max) 
         {
