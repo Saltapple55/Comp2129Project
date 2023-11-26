@@ -57,11 +57,11 @@ namespace FlightProject2129
         {
             numBookings++;
         }
-        public override string ToString()
+  public override string ToString()
         {
-            string s = "\nFirst Name: " + custFName;
-            s = s + "\nLast Name: " + custLName;
-            s = s + "\nPhone Number: " + phoneNum;
+            string s =  custFName;
+            s = s  + " " + custLName;
+            s = s + " " + phoneNum;
             return s;
         }
 
