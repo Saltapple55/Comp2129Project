@@ -6,150 +6,134 @@ using System.Threading.Tasks;
 
 namespace FlightProject2129
 {
+
     class UtilityClass
     {
+
+        // save the customers at the proper location
         public static void saveCustomers(string location, Customer[] customer, int num)
         {
             // if file exists at this location do not 
-            if (File.Exists(location))
+            //if (File.Exists(location))
+            //{
+            using StreamWriter sw = new StreamWriter(location);
+            sw.WriteLine(num);
+            for (int i = 0; i < num; i++)
             {
-                StreamWriter sw = new StreamWriter(location,true);
-                sw.WriteLine(num);
-                for (int i = 0; i < num; i++)
-                {
-                    // this would get the first name and last name and phone number 
-                    sw.Write(customer[i].FirstName + " " + customer[i].LastName + " " +
-                        customer[i].PhoneNum);
 
-                }
-                sw.Close();
-                Console.WriteLine("Customers Text saved successfully");
-            } else
+                
+                // this would get the first name and last name and phone number 
+                sw.WriteLine(customer[i].FirstName + " " + customer[i].LastName + " " + customer[i].PhoneNum + "\n");
+
+            }
+            sw.Close();
+
+            if (sw.BaseStream != null)
             {
-                Console.WriteLine("Error saving customers ");
+                Console.WriteLine($"Customers Text saved successfully to {location}");
+            }
+            else
+            {
+                Console.WriteLine($"Could not save customers text to {location}");
             }
         }
 
+        // save the flights at the proper location
         public static void saveFlights(string location, Flight[] flight, int num)
         {
-            if (File.Exists(location))
+            // if (File.Exists(location))
+            //{
+            using StreamWriter sw = new StreamWriter(location);
+            sw.WriteLine(num);
+            for (int i = 0; i < num; i++)
             {
-                StreamWriter sw = new StreamWriter(location, true);
-                sw.WriteLine(num);
-                for (int i = 0; i < num; i++)
-                {
-                    // getting all the flight info
-                    sw.Write(flight[i].NumPassengers + " " + flight[i].FlightNum + " " +
-                        flight[i].FlightDest + " " + flight[i].FlightOrigin);
+                // getting all the flight info
+                sw.WriteLine(flight[i].NumPassengers + " " +  flight[i].FlightNum + " " +  flight[i].FlightDest + " " + flight[i].FlightOrigin + "\n");
 
-                }
-                sw.Close();
-                Console.WriteLine("Flights Text saved successfuly");
-            } else { Console.WriteLine("Error saving flights"); 
+            }
+            sw.Close();
+            Console.WriteLine("Flights Text saved successfuly");
+
+            if (sw.BaseStream != null)
+            {
+                Console.WriteLine($"Flights Text saved successfully to {location}");
+            }
+            else
+            {
+                Console.WriteLine($"Could not save flights text to {location}");
             }
         }
 
 
         public static void saveBookings(string location, Booking[] booking, int num)
         {
-            if (File.Exists(location))
+            
+            using StreamWriter sw = new StreamWriter(location);
+            sw.WriteLine(num);
+            for (int i = 0; i < num; i++)
             {
-                StreamWriter sw = new StreamWriter(location, true);
-                sw.WriteLine(num);
-                for (int i = 0; i < num; i++)
-                {
-                    // getting all the flight info
-                    sw.Write(booking[i].BookingNum + " " + booking[i].BookingDate + " " +
-                        booking[i].Customer + " " + booking[i].Flight);
-                    // run the customer saving and flight saving for each one 
+                // getting all the flight info
+                sw.WriteLine(booking[i].BookingNum + " " + booking[i].BookingDate + " " + booking[i].Customer + " " + booking[i].Flight + "\n");
 
-                }
-                sw.Close();
-                Console.WriteLine("Booking Text saved successfully");
-            } else
+            
+
+            }
+            sw.Close();
+            Console.WriteLine("Booking Text saved successfully");
+
+            if (sw.BaseStream != null)
             {
-                Console.WriteLine("Error saving Bookings");
+                Console.WriteLine($"Booking Text saved successfully to {location}");
+            }
+            else
+            {
+                Console.WriteLine($"Could not save booking text to {location}");
             }
         }
 
-        // We have the Customer array
-        // take the location as a parameter
+        // this loads all the customer information including booking data and flights 
         public static Customer[] loadCustomer(string location)
         {
+            Console.WriteLine("Customer Loading");
             int num;
+            Customer[] CustTemp;
+            Booking[] bookTemp;
+            Flight[] Flighttemp;
             string line;
-            Customer[] temp;
-            StreamReader sr = new StreamReader(location);
-            num = Convert.ToInt32(sr.ReadLine());
-            // take the customer and make array named temp to store the customer with the number size given
-            temp = new Customer[num];
-
-            for (int i = 0; i < num; i++)
+            bool done = false;
+            if (File.Exists(location))
             {
-                line = sr.ReadLine();
-                // parts of the customer that we saved, so name and phone number 
-                string[] parts = line.Split();
-                // this would get the first name, last name, phone number
-                temp[i] = new Customer(parts[0], parts[1], parts[2]);
+                Console.WriteLine("File opened");
+                using StreamReader customerFile = new StreamReader(location);
+                int numCustomers = Convert.ToInt32(customerFile.ReadLine());
+                Console.WriteLine("Customers found: " + numCustomers);
+                CustTemp = new Customer[numCustomers + 10];
+                bookTemp = new Booking[numCustomers + 10];
+                Flighttemp = new Flight[numCustomers + 10];
+                for (int i = 0; i < numCustomers; i++)
+                {
+                    line = customerFile.ReadLine();
+                    string[] parts = line.Split();
+                    Console.WriteLine("booking data: " + parts[0] + " " +  parts[1] + " " + parts[2] + " " + parts[3]);
+                    bookTemp[i] = new Booking(Convert.ToInt32(parts[0]), parts[1] + parts[2] + parts[3]);
+                    Console.WriteLine("customer data: " + parts[4] + " " + parts[5] + " " + parts[6]);
+                    CustTemp[i] = new Customer(parts[4], parts[5], parts[6]);
+
+                    Console.WriteLine("flight data: " + parts[7] + " " + parts[8] + " " + parts[9] + " " + parts[10]);
+                    Flighttemp[i] = new Flight(Convert.ToInt32(parts[7]), parts[8], parts[9], Convert.ToInt32(parts[10]));
+                    
+                }
+                customerFile.Close();
 
             }
-            // always close it or else itll have an unhandled exception 
-            sr.Close();
-            return temp;
-        }
-
-        public static Flight[] loadFlight(string location)
-        {
-            int num;
-            string line;
-            Flight[] temp;
-            StreamReader sr = new StreamReader(location);
-            num = Convert.ToInt32(sr.ReadLine());
-            // take the flight and make array named temp to store the flight with the number size given
-            temp = new Flight[num];
-
-            for (int i = 0; i < num; i++)
+            else
             {
-                line = sr.ReadLine();
-                string[] parts = line.Split();
-                // this would get the number, passenger, convert to int both origin, desitnation
-                temp[i] = new Flight(Convert.ToInt32(parts[0]), parts[1], parts[2], Convert.ToInt32(parts[3]));
-
+                CustTemp = new Customer[10];
+                Console.WriteLine("File not found");
             }
-            // always close it or else itll have an unhandled exception 
-            sr.Close();
-            return temp;
-        }
+            return CustTemp;
+        } 
 
-
-        // this is a tester for now 
-        public static Booking[] loadBooking(string location)
-        {
-            int num;
-            string line;
-            Booking[] temp;
-            StreamReader sr = new StreamReader(location);
-            num = Convert.ToInt32(sr.ReadLine());
-            // take the flight and make array named temp to store the customer with the number size given
-            temp = new Booking[num];
-
-            for (int i = 0; i < num; i++)
-            {
-                line = sr.ReadLine();
-                string[] parts = line.Split();
-
-                // ASK ANDREW WHATS A BETTER WAY TO LOAD AN ARRAY 
-
-                // this would get the number, date, customer, flight
-                // a little unsure of the flight and customer part since they both arrays 
-                temp[i] = new Booking(Convert.ToInt32(parts[0]), parts[1]);
-
-            }
-            // always close it or else itll have an unhandled exception 
-            sr.Close();
-            return temp;
-
-        }
 
 
     }
