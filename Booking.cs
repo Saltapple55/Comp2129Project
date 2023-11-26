@@ -13,6 +13,7 @@ namespace FlightProject2129
         private Customer customer;
         private Flight flight;
         private string bookingDate;
+   
 
         public static void getBookingNumGenerator(int num)
         {
@@ -23,18 +24,25 @@ namespace FlightProject2129
             this.bookingNum = ++bookingNumGenerator;
             this.customer = customer;
             this.flight = flight;
-            this.bookingDate = DateTime.Now.ToString(@"MM\/dd\/yyyy h\:mm tt"); ;
+            this.bookingDate = DateTime.Now.ToString(@"MM\/dd\/yyyy h\:mm tt"); 
         }
 
-        
+
         // made a new constructor for the loading and saving of files
-    public Booking(int bookingNum, string bookingDate)
+        public Booking(int bookingNum, Customer customer, Flight flight, string bookingDate)
+        {
+            this.bookingNum = bookingNum;
+            this.customer = customer;
+            this.flight = flight;
+            this.bookingDate =DateTime.Now.ToString(@"MM\/dd\/yyyy h\:mm tt"); 
+        }
+
+        public Booking(int bookingNum, string bookingDate)
         {
             this.bookingNum = bookingNum;
            
             this.bookingDate = DateTime.Now.ToString(@"MM\/dd\/yyyy h\:mm tt");
         }
-
 
         public Customer Customer
         {
@@ -60,7 +68,11 @@ namespace FlightProject2129
         public override string ToString()
         {
 
-            string s = $"\nCustomer { customer.FirstName} {customer.LastName} \nFlight: {flight.FlightNum} \nBooking Number: {bookingNum} \nBooking Date: {bookingDate}";
+            string s = customer.FirstName + " " + customer.LastName + " " + flight.FlightNum + " " ;
+            s = s + bookingNum + " " ;
+            s = s + bookingDate + "\n";
+
+
 
             return s;
         }
