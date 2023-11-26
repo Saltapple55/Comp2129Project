@@ -1,8 +1,15 @@
-// See https://aka.ms/new-console-template for more information
 using System;
 using System.IO;
+using System.Text;
+
 namespace FlightProject2129
 {
+    // Aayan Farooqui 101359123
+    // Audrey Tjandra 101420460
+    // Leonardo Pereira 101419551
+    // Maria Sofronova 101062749
+
+
     public class Program
     {
 
@@ -12,37 +19,39 @@ namespace FlightProject2129
 
         public static void Main(string[] args)
         {
-            //PLEASE CHANGE THE LOCATION TO FIT U! 
-            string location = "flightproject.txt";
+
+          
+            //PLEASE CHANGE THIS TO YOUR LOCATION 
+            string location = "C:\\Users\\maria\\Desktop\\T177\\Sem 3\\COMP2129\\FlightProject2129\\airplanetext.txt";
+
+              Console.WriteLine("Previous Load: ");
+            string fileContent = File.ReadAllText(location);
+            Console.WriteLine(fileContent);
+
             
+            // this creates new managers
+
             custMan = new CustomerManager(10);
-            FlightManager flightMan = new FlightManager(10);
-            BookingManager bookMan = new BookingManager(10);
-            AirlineCoordinator airCon = new AirlineCoordinator(custMan, flightMan, bookMan);
+            flightMan = new FlightManager(10);  
+            bookingMan = new BookingManager(10);  
+
+            AirlineCoordinator airCon = new AirlineCoordinator(custMan, flightMan, bookingMan);
+         
             Menu.MainMenu(airCon);
+             
 
-
+            // this will use the save to disk to save the text information to location
             saveToDisk(location);
-
-
-
-
-
-
-            /*
-             * // Example array to be saved
-            string[] dataArray = { "Data1", "Data2", "Data3" };
-
-            // Specify the file name
-            string fileName = "output.txt";
-
-            // Call the SaveArrayToFile method to store the array in the file
-            DataStorage.SaveArrayToFile(fileName, dataArray);
-            */
+         
         }
 
+
+
+
+        // save our information to text file
         public static void saveToDisk(string location)
         {
+
             // add getters to all the lists
             // // intialize outside of main 
             if (custMan != null) {
@@ -68,10 +77,18 @@ namespace FlightProject2129
             {
                 Console.WriteLine("Try again, can't save booking");
             }
-            
         }
-       
-     
+
+        // this will load it
+        public static void loadToDisk(string location)
+        {
+            Customer[] customers = UtilityClass.loadCustomer(location);
+           
+            Console.WriteLine("Information loaded:");
+
+
+        }
+
 
     }
 }
