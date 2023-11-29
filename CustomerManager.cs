@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FlightProject2129
 {
-    internal class CustomerManager 
+    internal class CustomerManager
     {
         private int numCustomers;
         private int maxCustomers;
@@ -19,31 +19,32 @@ namespace FlightProject2129
         {
             //load from file
         }
-
-        public Customer [] getCustomerList()
-        {
-            return customerList;
-        }
-
-
-        public CustomerManager(int max) 
+        public CustomerManager(int max) //constructor
         {
             maxCustomers = max;
             numCustomers = 0;
             customerList = new Customer[max]; //customer list array 
         }
-        //properties
+        public Customer[] getCustomerList() //getters
+        {
+            return customerList; 
+        }
+        
         public int NumCustomers
         {
             get { return numCustomers; }
         }
-       
+        public Customer getCustomer(int index)
+        {
+            return customerList[index];
+        }
+
         public bool addCustomer(string fname, string lname, string phoneNum, out string error)
         {
-            
+
             if (numCustomers < maxCustomers && !checkCustomerExists(fname, lname, phoneNum)) //checks if there is space
             {
-                Customer c = new Customer( fname, lname, phoneNum); //creating customer object with attributes
+                Customer c = new Customer(fname, lname, phoneNum); //creating customer object with attributes
                 customerList[numCustomers] = c; //adding new customer into array
                 numCustomers++; //incremeting so it can loop back to create new customers until there is no more space
                 error = "";
@@ -58,21 +59,19 @@ namespace FlightProject2129
                 error = "Cannot add any new Customers";
             return false; //once it is full
         }
-        public Customer getCustomer( int index)
-        {
-            return customerList[index];
-        }
+      
         public Customer viewCustomer(string custFname, string custLname, string phoneNum)
         {
-            for (int i = 0; i < numCustomers; i++)
+            for (int i = 0; i < numCustomers; i++) //goes through the customers 
             {
                 if (customerList[i].FirstName == custFname && customerList[i].LastName == custLname &&
                     customerList[i].PhoneNum == phoneNum)
+                    //if customer first name, last name and phone number matches (customer exists), returns customer
                 {
                     return customerList[i];
                 }
             }
-            return null;
+            return null; //else if the customer doesn't match returns null
 
         }
 
@@ -92,10 +91,11 @@ namespace FlightProject2129
 
         public bool removeCustomer(int index, out string error)
         {
-            if (customerList[index].NumBookings>0) {
+            if (customerList[index].NumBookings > 0) //if the customer exists in the array and have a booking (index is greater than 0)
+            { //cannot remove customer as can't delete a customer if they have a booking 
                 error = "Customer could not be deleted because they have already made bookings";
                 return false;
-                
+
             }
             else
             {
@@ -109,7 +109,7 @@ namespace FlightProject2129
             //redundancy failsafe-should never trigger because because getValidIndex() will never give anything >=numCustomers
         }
 
-       
+
         public override string ToString()
         {
             if (numCustomers == 0)
@@ -120,38 +120,10 @@ namespace FlightProject2129
             string s = "------------Customer List-------------\n";
             for (int i = 0; i < numCustomers; i++)
             {
-                s = s + $"{i+1}. {customerList[i].ToString()}";
+                s = s + $"{i + 1}. {customerList[i].ToString()}";
                 s = s + "\n -------------------------------\n";
             }
             return s;
         }
-
-
-
-
-
-
-
     }
 }
-
-
-/*
-
-+addCustomer(id: int, phoneNum: string,
-numBookings: int, dateBooking: string): boolean
-+ viewCustomer(custFname: string, custLname
-: string, phoneNum: string)
-+ viewBookings() : string
-
-+checkifDuplicate(custFname: string,
-custLName : string, phoneNum: string)
-
-+removeCustomer()
-
-
-+ viewAll()
-+ ToString()
-
-
-*/
