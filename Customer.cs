@@ -10,7 +10,7 @@ namespace FlightProject2129
     internal class Customer
     {
         //remember to make custID read from file when you learn how
-        private static int custIDGenerator=0;
+        private static int custIDGenerator = 0;
         private int custID;
 
         private string custFName;
@@ -22,23 +22,23 @@ namespace FlightProject2129
         {
             custIDGenerator = num;
         }
-        public Customer( string firstName, string lastName, string phoneNum)
+        public Customer(string firstName, string lastName, string phoneNum)
         {
-            custID = ++custIDGenerator;
+            custID = ++custIDGenerator; //id generator 
             custFName = firstName;
             custLName = lastName;
             this.phoneNum = phoneNum;
             numBookings = 0;
-            
-        }
 
+        }
+        //getters
         public int CustID 
         {
             get { return custID; }
         }
         public string FirstName
         {
-            get { return custFName; } 
+            get { return custFName; }
         }
         public string LastName
         {
@@ -49,18 +49,18 @@ namespace FlightProject2129
             get { return phoneNum; }
         }
 
-        public  int NumBookings
+        public int NumBookings
         {
             get { return numBookings; }
         }
-        public void increaseNumBooking()
+        public void increaseNumBooking() //increases bookings
         {
-            numBookings++;
-        }
-  public override string ToString()
+            numBookings++; 
+        } 
+        public override string ToString()
         {
-            string s =  custFName;
-            s = s  + " " + custLName;
+            string s = custFName;
+            s = s + " " + custLName;
             s = s + " " + phoneNum;
             return s;
         }
