@@ -9,7 +9,6 @@ namespace FlightProject2129
 {
     internal class Customer
     {
-        //remember to make custID read from file when you learn how
         private static int custIDGenerator = 0;
         private int custID;
 
