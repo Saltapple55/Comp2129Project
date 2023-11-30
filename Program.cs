@@ -24,9 +24,19 @@ namespace FlightProject2129
             //PLEASE CHANGE THIS TO YOUR LOCATION 
             string location = "C:\\Users\\maria\\Desktop\\T177\\Sem 3\\COMP2129\\FlightProject2129\\airplanetext.txt";
 
-              Console.WriteLine("Previous Load: ");
-            string fileContent = File.ReadAllText(location);
-            Console.WriteLine(fileContent);
+            
+            
+            try
+            {
+                Console.WriteLine("Previous Load: ");
+                string fileContent = File.ReadAllText(location);
+                Console.WriteLine(fileContent);
+
+            }
+            catch (FileNotFoundException ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+                Console.WriteLine("Couldn't find the file. It will load the file when you have information saved :)");
 
             
             // this creates new managers
