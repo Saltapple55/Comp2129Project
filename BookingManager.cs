@@ -13,6 +13,7 @@ namespace FlightProject2129
         private int maxBookings;
         private int numBookings;
         private Booking[] bookingList;
+
         
         public BookingManager(int max)
         {
@@ -21,33 +22,21 @@ namespace FlightProject2129
             bookingList = new Booking[max];
         }
 
-        
+        public int getNumBookings() 
+        {
+            return numBookings;
+        }
+
+
+
         public Booking[] getBookingList()
         {
             return bookingList;
         }
 
+   
 
-        // Show Customers
-
-
-
-        // check if the booking works 
-        /* public bool IsBookingValid(int custId, int flightId)
-         {
-             // I NEED THE CUSTOMER AND FLIGHT 
-             Customer selectedCustomer = findcustId(custId);
-             Flight selectedFlight = findflightId(flightId);
-             Booking existingBooking = FindBookingByCustomerAndFlightId(customerId, flightId);
-
-             return selectedCustomer != null && selectedFlight != null && selectedFlight.AvailableSeats > 0 && existingBooking == null;
-         }*/
-
-        // NEED THE CUSTOMER 
-        //FIND CUSTOMER
-
-        //standard adding of booking
-        
+        // check if the booking matches customer and flight
         private bool checkBookingExists(int custId, int flightId)
         {
             for (int i = 0; i < numBookings; i++)
@@ -60,6 +49,7 @@ namespace FlightProject2129
             }
             return false;
         }
+
 
         public bool addBooking(Customer customer, Flight flight, out string error)
         {
@@ -82,18 +72,16 @@ namespace FlightProject2129
             customer.increaseNumBooking();
 
 
-            
             bookingList[numBookings] = new Booking(customer, flight);
             numBookings++;
             error = "";
             return true;
-                // ADD ERROR CODE
 
         }
 
         public override string ToString()
         {
-            if(numBookings == 0)
+            if (numBookings == 0)
             {
                 return "No Bookings have been made yet";
             }
@@ -108,4 +96,3 @@ namespace FlightProject2129
         }
     }
 }
-
