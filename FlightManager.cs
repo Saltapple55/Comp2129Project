@@ -8,11 +8,13 @@ namespace FlightProject2129
 {
     internal class FlightManager
     {
+        // Attributes
         private int numFlights;
         private int maxFlights;
         private Flight[] flightList;
 
 
+        // Constructor
         public FlightManager(int maxFlights)
         {
             this.numFlights = 0;
@@ -21,6 +23,7 @@ namespace FlightProject2129
 
         }
 
+        // getters and setters
         public Flight[] getFlightList()
         {
             return flightList;
@@ -29,9 +32,10 @@ namespace FlightProject2129
 
         public int NumFlights { get { return numFlights; } }
 
+        // method to add flights
         public bool addFlight(int flightNum, string flightDest, string flightOrigin, int maxSeats, out string error)
         {
-            if (!flightExists(flightNum))
+            if (!flightExists(flightNum)) // checks to see if flight doesn't exist 
             {
                 flightList[numFlights] = new Flight(flightNum, flightDest, flightOrigin, maxSeats);
                 numFlights++;
@@ -41,6 +45,8 @@ namespace FlightProject2129
             error = "Flight number already exists";
             return false;
         }
+
+        // gets the index of flight
         public Flight getFlight(int index)
         {
             return flightList[index];
@@ -56,6 +62,7 @@ namespace FlightProject2129
             
         }*/
 
+        // method to check if flight exists
         private bool flightExists(int flightNum)
         {
             for (int i = 0; i < numFlights; i++) 
@@ -68,6 +75,7 @@ namespace FlightProject2129
             return false;
         }
 
+        // method to view particular flights
         public string viewParticularFlight(int flightNum)
         {
             for (int i = 0; i<numFlights; i++)
@@ -78,6 +86,7 @@ namespace FlightProject2129
             return "Flight does not exist";
         }
 
+        // method to remove flights
         public bool removeFlight(int index, out string error)
         {
 
@@ -92,10 +101,9 @@ namespace FlightProject2129
             numFlights--;
             error = "";
             return true;
-
-            
         }
 
+        // ToString method
         public override string ToString()
         {
             if (numFlights == 0)
