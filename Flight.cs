@@ -8,6 +8,7 @@ namespace FlightProject2129
 {
     internal class Flight 
     {
+        // Attributes
         private int numPassengers;
         private int maxSeats;
         private Customer[] passengerList;
@@ -15,6 +16,7 @@ namespace FlightProject2129
         private string flightDest;
         private string flightOrigin;
 
+        // Constructor
         public Flight (int flightNum, string flightDest, string flightOrigin, int maxSeats)
         {
             this.flightId = flightNum;
@@ -26,6 +28,8 @@ namespace FlightProject2129
 
 
         }
+
+        // getters and setters
         public int FlightNum { get { return flightId; } }
         public string FlightDest { get { return flightDest; } }
         public string FlightOrigin { get { return flightOrigin; } }
@@ -34,17 +38,19 @@ namespace FlightProject2129
 
         public Customer[] Passengers { get { return passengerList; } }
 
+        // Method to add customer
         public bool addCustomer(Customer customer)
         {
             if (numPassengers < maxSeats)
             {
                 passengerList[numPassengers] = customer;
-                numPassengers++;
+                numPassengers++; // increments number of passengers each time a passenger is added
                 return true;
             }
             else return false;
         }
 
+        // Method for flight information
         public string flightInfo()
         {
             string s = "\nFlight Number: " + flightId +
@@ -53,6 +59,7 @@ namespace FlightProject2129
             return s;
         }
 
+        // Tostring method
         public override string ToString()
         {
             string s = $"------------Flight--------------"+
